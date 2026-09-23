@@ -5,7 +5,7 @@ A Laravel-based request management system for DevOps Lab 1.
 ## Student Information
 - **Name:** Cristian B Gubat
 - **Course:** BS Information Technology
-- **Year & Section:** 4th Year, Block 3
+- **Year & Block:** 4 - 3
 
 ## Software Requirements
 - PHP 8.2.12
