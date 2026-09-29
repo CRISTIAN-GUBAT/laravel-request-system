@@ -5,9 +5,9 @@ This project demonstrates project setup, MySQL integration, database modeling,
 migrations, and Git version control following secure DevOps practices.
 
 ## Student Information
-- Name: Cristian B. Gubat
-- Course: BS Information Technology
-- Year & Block: 4 - 3
+- **Name:** Cristian B. Gubat
+- **Course:** BS Information Technology
+- **Year & Block:** 4 - 3
 
 ## Software Requirements
 - PHP 8.2.12
@@ -19,38 +19,42 @@ migrations, and Git version control following secure DevOps practices.
 
 ## Laravel Installation Instructions
 
-# Create new Laravel project
+```
+Create new Laravel project
 composer create-project laravel/laravel laravel_request_system
 
-# Enter project directory
+Enter project directory
 cd laravel_request_system
 
-# Copy environment file
+Copy environment file
 cp .env.example .env
 
-# Generate application key
+Generate application key
 php artisan key:generate
 
-# Configure .env for MySQL
-# DB_CONNECTION=mysql
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=laravel_request_system_db
-# DB_USERNAME=root
-# DB_PASSWORD=
+Configure .env for MySQL
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_request_system_db
+DB_USERNAME=root
+DB_PASSWORD=
 
-# Run database migrations
+Run database migrations
 php artisan migrate
 
-# Start development server
+Start development server
 php artisan serve
+```
 
 Open: http://127.0.0.1:8000
 
 ## Database Name
+
 laravel_request_system_db
 
 ## Database Import Instructions
+
 Import via phpMyAdmin → Import → Choose file → Go.
 
 ## Request Table Fields (Lab 2)
@@ -68,10 +72,15 @@ Import via phpMyAdmin → Import → Choose file → Go.
 | updated_at | TIMESTAMP | NULLABLE | Update time |
 
 ## Migration Command (Lab 2)
+
+```
 php artisan make:migration create_requests_table
+
 php artisan migrate
+```
 
 ## Steps to Verify the Table
+
 1. Run `php artisan migrate:status` to confirm the migration is marked as Ran.
 2. Open phpMyAdmin and select `laravel_request_system_db`.
 3. Click the `requests` table to view its structure.
@@ -84,13 +93,21 @@ php artisan migrate
 3. **Record Keeper:** As a record keeper, I want to browse and verify all stored requests with their timestamps so that I can maintain accurate records and audit request history.
 
 ## Commands Needed to Run the Project
+
+```
 composer install
+
 cp .env.example .env
+
 php artisan key:generate
+
 php artisan migrate
+
 php artisan serve
+```
 
 Open: http://127.0.0.1:8000
 
 ## GitHub Repository
+
 https://github.com/CRISTIAN-GUBAT/laravel-request-system
