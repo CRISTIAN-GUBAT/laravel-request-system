@@ -115,8 +115,8 @@ Students may only view their own requests. An owner or administrator may view a 
 | Policy | app/Policies/ServiceRequestPolicy.php | Cristian B. Gubat |
 | Controller | app/Http/Controllers/ServiceRequestController.php | Cristian B. Gubat |
 | Routes | routes/web.php | Cristian B. Gubat |
-| Views | resources/views/requests/ | [Partner Name] |
-| Tests | tests/Feature/ServiceRequestTest.php | [Partner Name] |
+| Views | resources/views/requests/ | Alfie Dyne Castro|
+| Tests | tests/Feature/ServiceRequestTest.php | Alfie Dyne Castro |
 
 ## Testing Steps (Lab 3)
 
