@@ -1,23 +1,39 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Create Request') }}
+        </h2>
+    </x-slot>
 
-@section('content')
-    <h1>Create Request</h1>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <form method="POST" action="{{ route('requests.store') }}">
+                        @csrf
 
-    <form method="POST" action="{{ route('requests.store') }}">
-        @csrf
+                        <div class="mb-3">
+                            <label>Item Name</label>
+                            <input type="text" name="item_name" value="{{ old('item_name') }}" required maxlength="150" class="form-control">
+                            @error('item_name') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
 
-        <label>Item Name</label>
-        <input type="text" name="item_name" value="{{ old('item_name') }}" required maxlength="150">
-        @error('item_name') <span>{{ $message }}</span> @enderror
+                        <div class="mb-3">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" value="{{ old('quantity') }}" required min="1" class="form-control">
+                            @error('quantity') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
 
-        <label>Quantity</label>
-        <input type="number" name="quantity" value="{{ old('quantity') }}" required min="1">
-        @error('quantity') <span>{{ $message }}</span> @enderror
+                        <div class="mb-3">
+                            <label>Purpose</label>
+                            <textarea name="purpose" required maxlength="2000" class="form-control">{{ old('purpose') }}</textarea>
+                            @error('purpose') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
 
-        <label>Purpose</label>
-        <textarea name="purpose" required maxlength="2000">{{ old('purpose') }}</textarea>
-        @error('purpose') <span>{{ $message }}</span> @enderror
-
-        <button type="submit">Submit</button>
-    </form>
-@endsection
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

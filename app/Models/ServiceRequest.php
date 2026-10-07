@@ -20,13 +20,6 @@ class ServiceRequest extends Model
         'status',
     ];
 
-    protected $guarded = [
-        'id',
-        'user_id',
-        'is_admin',
-        'role',
-    ];
-
     public function user()
     {
         return $this->belongsTo(User::class);
