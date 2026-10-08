@@ -193,3 +193,7 @@ Open: http://127.0.0.1:8000
 ## GitHub Repository
 
 https://github.com/CRISTIAN-GUBAT/laravel-request-system
+
+## Laboratory 3 Verification
+
+Verification instruction: Follow the required access checks.
