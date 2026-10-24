@@ -196,4 +196,28 @@ https://github.com/CRISTIAN-GUBAT/laravel-request-system
 
 ## Laboratory 3 Verification
 
+Verification instruction: Test student ownership and deny access to another student's request.
 Verification instruction: Test administrator access and administrator-only status updates.
+
+
+## Docker Container Environment (Lab 4)
+
+### Requirements
+- Docker Desktop (with WSL 2 backend)
+- Docker Compose
+
+### How to Run
+1. Build and start the containers:
+   `docker compose up -d --build`
+2. Run migrations inside the app container:
+   `docker compose exec app php artisan migrate`
+3. Access the application at: `http://127.0.0.1:8080`
+
+### Container Architecture
+- **web** (Nginx): Serves the Laravel app (Port 8080).
+- **app** (PHP-FPM): Runs the Laravel code as non-root `www-data`.
+- **db** (MySQL): Stores data using the `db_data` named volume for persistence.
+
+### Security Notes
+- Credentials are kept in `.env` files and passed at runtime, never baked into the image.
+- The application runs as the non-root `www-data` user.

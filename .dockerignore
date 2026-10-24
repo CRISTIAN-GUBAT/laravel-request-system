@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.container.example
+.git
+.gitignore
+vendor
+node_modules
+storage/logs/*
+database/*.sql
+*.zip
+*.tar.gz
