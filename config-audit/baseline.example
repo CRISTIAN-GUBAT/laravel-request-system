@@ -1,0 +1,12 @@
+# config-audit/baseline.example
+# NON-SECRET baseline — safe to commit
+# Do NOT put real .env values, keys, or tokens here
+
+environment_label=staging
+debug_setting=false
+document_root=/var/www/app/public
+writable_paths=storage/,bootstrap/cache/
+service_identity=www-data
+database_access_scope=localhost_only
+exposed_services=80,443
+app_key_present=true

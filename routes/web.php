@@ -4,6 +4,25 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceRequestController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Lab 8 — Health & Revision Endpoint
+|--------------------------------------------------------------------------
+| Used by the staging workflow health check and smoke tests.
+| Returns version, environment, debug flag, and short commit SHA.
+| No secrets or credentials are exposed.
+*/
+Route::get('/health', function () {
+    return response()->json([
+        'status'  => 'ok',
+        'version' => config('app.version', 'unknown'),
+        'env'     => config('app.env', 'unknown'),
+        'debug'   => config('app.debug', false),
+        'commit'  => trim(@shell_exec('git rev-parse --short HEAD 2>/dev/null') ?? 'unknown'),
+        'time'    => now()->toIso8601String(),
+    ]);
+})->name('health');
+
 Route::get('/', function () {
     return view('welcome');
 });

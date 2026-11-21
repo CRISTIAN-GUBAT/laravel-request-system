@@ -1,0 +1,85 @@
+name: Deploy to Staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to deploy (e.g., v1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.version }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, mysql, pdo, pdo_mysql
+
+      - name: Copy env
+        run: cp .env.example .env
+
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Run tests
+        run: php artisan test
+
+      - name: Create artifact
+        run: |
+          tar -czf release-${{ github.event.inputs.version }}.tar.gz \
+            --exclude='.git' --exclude='node_modules' --exclude='.env' \
+            --exclude='vendor' --exclude='storage/logs' .
+          sha256sum release-${{ github.event.inputs.version }}.tar.gz > checksum.txt
+          cat checksum.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ github.event.inputs.version }}
+          path: |
+            release-${{ github.event.inputs.version }}.tar.gz
+            checksum.txt
+
+  deploy:
+    name: Deploy to Staging (Approval Required)
+    needs: build
+    runs-on: ubuntu-latest
+    environment: staging    # ← APPROVAL GATE — create this in GitHub Settings
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-${{ github.event.inputs.version }}
+
+      - name: Verify checksum
+        run: sha256sum -c checksum.txt
+
+      - name: Show deploy target
+        run: |
+          echo "Deploying ${{ github.event.inputs.version }} to staging"
+          echo "Artifact: release-${{ github.event.inputs.version }}.tar.gz"
+          echo "Checksum: $(cat checksum.txt)"
+
+      - name: Deploy (instructor-managed)
+        run: |
+          echo "Replace this step with instructor-provided deploy command"
+          # Example:
+          # scp release-${{ github.event.inputs.version }}.tar.gz user@staging:/var/www/
+          # ssh user@staging "cd /var/www && tar -xzf release-${{ github.event.inputs.version }}.tar.gz"
+
+      - name: Health check
+        run: |
+          echo "Run: curl -f https://[STAGING-URL]/health"
+          # curl -f https://[STAGING-URL]/health || exit 1
