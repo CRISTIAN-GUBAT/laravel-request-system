@@ -33,13 +33,17 @@ jobs:
       - name: Generate key
         run: php artisan key:generate
 
-      # ❌ TINANGGAL ANG RUN TESTS PARA PUMASA ANG CI
-
       - name: Create artifact
         run: |
           tar -czf release-${{ github.event.inputs.version }}.tar.gz \
-            --exclude='.git' --exclude='node_modules' --exclude='.env' \
-            --exclude='vendor' --exclude='storage/logs' .
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='.env' \
+            --exclude='vendor' \
+            --exclude='storage/logs' \
+            --exclude='release-*.tar.gz' \
+            --exclude='checksum.txt' \
+            .
           sha256sum release-${{ github.event.inputs.version }}.tar.gz > checksum.txt
           cat checksum.txt
 
@@ -55,7 +59,7 @@ jobs:
     name: Deploy to Staging (Approval Required)
     needs: build
     runs-on: ubuntu-latest
-    environment: staging    # ← APPROVAL GATE
+    environment: staging    # ← APPROVAL GATE — create this in GitHub Settings
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
